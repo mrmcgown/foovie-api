@@ -1,206 +1,38 @@
-[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
+## Foovie API
 
-# foovie-api
+You are currently viewing the backend repo for Foovie. To view the frontend repo, click on the following link: https://github.com/mrmcgown/foovie-client.
 
-A template for starting projects with `express` as an API. Includes
-authentication and common middlewares.
+To view the web app, click on the following link: https://mrmcgown.github.io/foovie-client/.
 
-## Installation
+The server site is located at https://still-hollows-79663.herokuapp.com/.
 
-1.  [Download](../../archive/master.zip) this template.
-1.  Move the .zip file to your `wdi/projects/` directory and Unzip it (creating a folder) -- **NOTE:** if the folder was already unzipped, use the `mv` command line to move it to the `wdi/projects/` directory.
-1.  Rename the directory from foovie-api -> your-app-name.
-1.  Empty [`README.md`](README.md) and fill with your own content.
-1.  Move into the new project and `git init`.
-1.  Replace all instances of `'foovie-api'` with your app name.
-1.  Install dependencies with `npm install`.
-1.  Ensure that you have `nodemon` installed by running `npm install -g nodemon`.
-1.  From the root of your repository, run the following commands. They will set a SECRET_KEY for development and testing.
- ```sh
- echo SECRET_KEY_BASE_TEST=$(openssl rand -base64 66 | tr -d '\n') >> .env
- echo SECRET_KEY_BASE_DEVELOPMENT=$(openssl rand -base64 66 | tr -d '\n') >> .env
- ```
-1.  Ensure the API is functioning properly by running `npm run server`.
-1.  Once everything is working, make an initial commit.
-1.  Follow the steps in [express-api-deployment-guide](https://git.generalassemb.ly/ga-wdi-boston/express-api-deployment-guide)
+## Technologies used:
 
-## Structure
+- HTML
+- Bootstrap 4
+- JavaScript
+- jQuery
+- Ajax
+- Node Express
+- MongoDB
 
-Dependencies are stored in [`package.json`](package.json).
+## Unsolved problems:
 
-The most important file for understanding the structure of the template is
-`server.js`. This is where the actual Express `app` object is created, where
-the middlewares and routes are registered, and more. To register a routefile,
-follow the pattern established here with `exampleRoutes` and `userRoutes`. If
-you want to add any middlewares to your app, do that here.
+- When deleting a plan, clicking the submit button sends an ajax request to delete all id's that have been clicked. This doesn't interfere with the functionality of the application as the previous plans have already been deleted, but it will throw an error in the console. A similar issue can occur when submitting edits to a plan.
 
-The `app` directory contains models and route files. Models are simply Mongoose
-models. To create your own, follow the patterns established in
-`app/models/example.js`. Route files are somewhat similar to controllers in
-Rails, but they cover more functionality, including serialization and deciding
-which HTTP verbs to accept and what to do with them.
+## Planning:
 
-The `config` directory holds just `db.js`, which is where you specify the name
-and URL of your database.
+- In developing this app, I began with the user stories, wireframe, and ERD. The idea for the app came from the idea of having a one stop app for creating food and movie plans, so I built into the ERD the idea of having a database of invitations (a future feature). For the backend, I went with Node Express because of its use of JavaScript. I had experience with Ruby on Rails from a previous project, but less comfort with Node Express, so I took advantage of this project to get more practice. The backend as it currently stands is pretty straightforward with users, plans, and ownership requirements. On the frontend, I encountered difficulty with rendering the plans dynamically and incorporating modals with forms. However, the result is better than my past experience of simply including elements in the html and hiding and showing them through use of jQuery depending on the state. Attaching the correct id's of plans to the respectice rows and buttons that are dynamically created also created some small issues which I ultimately resolved.
 
-The `lib` directory is for code that will be used in other places in the
-application. The token authentication code is stored in `lib/auth.js`. The
-other files in `lib` deal with error handling. `custom_errors.js` is where all
-the different custom classes of errors are created. If you need some other kind
-of error message, you can add it here. There are also some functions defined
-here that are used elsewhere to check for errors. `lib/error_handler.js` is a
-function that will be used in all your `.catch`es. It catches errors, and sets
-the response status code based on what type of error got thrown.
+Future features may include incorporating third-party APIs for food and movie selection, invitiation functionality, the ability to mark plans as old and current, and unique styling.
 
-You probably will only need to interact with files in `app/models`,
-`app/routes`, and `server.js`. You'll need to edit `db/config.js` just once,
-to change the name of your app.
+## Entity Relationship Diagram (ERD):
 
-## Tasks
+![alt text](https://i.imgur.com/WTpz9nO.png)
 
-Instead of `grunt`, this template uses `npm` as a task runner. This is more
-conventional for modern Express apps, and it's handy because we'll definitely
-use `npm` anyway. These are the commands available:
+## Routes
 
-| Command                | Effect                                                                                                      |
-|------------------------|-------------------------------------------------------------------------------------------------------------|
-| `npm run server`       | Starts a development server with `nodemon` that automatically refreshes when you change something.                                                                                         |
-| `npm test`             | Runs automated tests.                                                                                       |
-| `npm run debug-server` | Starts the server in debug mode, which will print lots of extra info about what's happening inside the app. |
-
-## API
-
-Use this as the basis for your own API documentation. Add a new third-level
-heading for your custom entities, and follow the pattern provided for the
-built-in user authentication documentation.
-
-Scripts are included in [`scripts`](scripts) to test built-in actions. Add your
-own scripts to test your custom API.
-
-### Authentication
-
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| POST   | `/sign-up`             | `users#signup`    |
-| POST   | `/sign-in`             | `users#signin`    |
-| PATCH  | `/change-password/` | `users#changepw`  |
-| DELETE | `/sign-out/`        | `users#signout`   |
-
-#### POST /sign-up
-
-Request:
-
-```sh
-curl --include --request POST http://localhost:4741/sign-up \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "an@example.email",
-      "password": "an example password",
-      "password_confirmation": "an example password"
-    }
-  }'
-```
-
-```sh
-scripts/sign-up.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 201 Created
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "an@example.email"
-  }
-}
-```
-
-#### POST /sign-in
-
-Request:
-
-```sh
-curl --include --request POST http://localhost:4741/sign-in \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "an@example.email",
-      "password": "an example password"
-    }
-  }'
-```
-
-```sh
-scripts/sign-in.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "an@example.email",
-    "token": "33ad6372f795694b333ec5f329ebeaaa"
-  }
-}
-```
-
-#### PATCH /change-password/
-
-Request:
-
-```sh
-curl --include --request PATCH http://localhost:4741/change-password/ \
-  --header "Authorization: Token token=$TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "passwords": {
-      "old": "an example password",
-      "new": "super sekrit"
-    }
-  }'
-```
-
-```sh
-TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/change-password.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
-
-#### DELETE /sign-out/
-
-Request:
-
-```sh
-curl --include --request DELETE http://localhost:4741/sign-out/ \
-  --header "Authorization: Token token=$TOKEN"
-```
-
-```sh
-TOKEN=33ad6372f795694b333ec5f329ebeaaa scripts/sign-out.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
-
-## [License](LICENSE)
-
-1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
-1.  All software code is licensed under GNU GPLv3. For commercial use or
-    alternative licensing, please contact legal@ga.co.
+- GET
+- POST
+- PATCH
+- DELETE
